@@ -73,7 +73,7 @@ ExcludeArch: %{arm}
 
 # Whether to use RPM build wheels from the python-{pip,setuptools}-wheel package
 # Uses upstream bundled prebuilt wheels otherwise
-%bcond_without rpmwheels
+%bcond_with rpmwheels
 # If the rpmwheels condition is disabled, we use the bundled wheel packages
 # from Python with the versions below.
 # This needs to be manually updated when we update Python.
@@ -451,8 +451,52 @@ Summary:        Python runtime libraries
 Requires: %{python_wheel_pkg_prefix}-setuptools-wheel >= 59.6.0-3
 Requires: %{python_wheel_pkg_prefix}-pip-wheel >= 21.3.1-4
 %else
+# Versions of bundled libs are based on:
+# https://github.com/pypa/pip/blob/22.3.1/src/pip/_vendor/vendor.txt
+# https://github.com/pypa/setuptools/blob/v65.5.0/pkg_resources/_vendor/vendored.txt
+# https://github.com/pypa/setuptools/blob/v65.5.0/setuptools/_vendor/vendored.txt
 Provides: bundled(python3dist(pip)) = %{pip_version}
+Provides: bundled(python3dist(cachecontrol)) = 0.12.11
+Provides: bundled(python3dist(certifi)) = 2022.9.24
+Provides: bundled(python3dist(chardet)) = 5
+Provides: bundled(python3dist(colorama)) = 0.4.5
+Provides: bundled(python3dist(distlib)) = 0.3.6
+Provides: bundled(python3dist(distro)) = 1.7
+Provides: bundled(python3dist(idna)) = 3.4
+Provides: bundled(python3dist(msgpack)) = 1.0.4
+Provides: bundled(python3dist(packaging)) = 21.3
+Provides: bundled(python3dist(pep517)) = 0.13
+Provides: bundled(python3dist(platformdirs)) = 2.5.2
+Provides: bundled(python3dist(pygments)) = 2.13
+Provides: bundled(python3dist(pyparsing)) = 3.0.9
+Provides: bundled(python3dist(requests)) = 2.28.1
+Provides: bundled(python3dist(resolvelib)) = 0.8.1
+Provides: bundled(python3dist(rich)) = 12.5.1
+Provides: bundled(python3dist(setuptools)) = 44
+Provides: bundled(python3dist(six)) = 1.16
+Provides: bundled(python3dist(tenacity)) = 8.1
+Provides: bundled(python3dist(tomli)) = 2.0.1
+Provides: bundled(python3dist(typing-extensions)) = 4.4
+Provides: bundled(python3dist(urllib3)) = 1.26.12
+Provides: bundled(python3dist(webencodings)) = 0.5.1
+
 Provides: bundled(python3dist(setuptools)) = %{setuptools_version}
+Provides: bundled(python3dist(appdirs)) = 1.4.3
+Provides: bundled(python3dist(importlib-metadata)) = 4.11.1
+Provides: bundled(python3dist(importlib-resources)) = 5.4
+Provides: bundled(python3dist(jaraco-text)) = 3.7
+Provides: bundled(python3dist(more-itertools)) = 8.8
+Provides: bundled(python3dist(ordered-set)) = 3.1.1
+Provides: bundled(python3dist(packaging)) = 21.3
+Provides: bundled(python3dist(pyparsing)) = 3.0.9
+Provides: bundled(python3dist(tomli)) = 2.0.1
+Provides: bundled(python3dist(typing-extensions)) = 4.0.1
+Provides: bundled(python3dist(zipp)) = 3.7
+
+# Combined from python-setuptools-65.5.0-1.fc38 and python-pip-22.3.1-1.fc38
+# The license tag of pip is a superset of the license tag of setuptools
+# See the specs for license breakdown
+License: Python-2.0.1 AND MIT AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND LGPL-2.1-only AND MPL-2.0 AND (Apache-2.0 OR BSD-2-Clause) 
 %endif
 
 %unversioned_obsoletes_of_python3_X_if_main libs
